@@ -1,0 +1,9 @@
+/// Wifi 
+#define CONF_HOSTNAME "esp32cam"
+#define CONF_WIFI_SSID "WIFISSID"
+#define CONF_WIFI_KEY "WIFIPASSWORD"
+
+// OTA
+#define CONF_OTA true
+#define CONF_OTA_HOST "esp32cam"
+#define CONF_OTA_PASS "otapass"
