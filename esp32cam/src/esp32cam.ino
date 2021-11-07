@@ -1,6 +1,7 @@
 #include "config.h"
 #include <ArduinoOTA.h>
 #include <WiFi.h>
+#include <WebServer.h>
 
 unsigned long systemStartTime = millis();
 
@@ -20,8 +21,10 @@ const char* OTA_PASS = CONF_OTA_PASS;
 bool ota = CONF_OTA;
 bool otaSetupDone = false;
 
+//WebServer
+WebServer server(80);
+
 void connectWifi(){
-    // WiFi.disconnect();
     Serial.println(WiFi.status());
     WiFi.begin(WIFI_SSID, WIFI_KEY);
     wifiConnectionAttemps++;
@@ -42,7 +45,7 @@ boolean checkWifiConnection() {
     return WiFi.status() == WL_CONNECTED;
 }
 
-void setupOta() {
+void activateOta() {
     if (ota && WiFi.status() == WL_CONNECTED && otaSetupDone == false) {
         ArduinoOTA.setHostname(OTA_HOST);
         ArduinoOTA.setPassword(OTA_PASS);
@@ -52,10 +55,29 @@ void setupOta() {
     }
 }
 
+//################################## WebServer Stuff START
+void setupWebServer(){
+    server.on("/", handleIndexAction);
+    server.begin();
+}
+
+String indexPage = "<!DOCTYPE html>\
+<html>\
+<body>\
+<h1>ESP32Cam Webserver</h1>\
+</body>\
+</html>";
+
+void handleIndexAction() {
+  server.send(200, "text/html", indexPage);
+}
+
+//################################## WebServer Stuff END
+
 void setup() {
     Serial.begin(115200);
     setupWifi();
-    
+    setupWebServer();
     Serial.println("Setup done");
 }
 
@@ -70,7 +92,9 @@ void setupWifi(){
 void loop() {
     if (checkWifiConnection()){
         if (otaSetupDone == false){
-            setupOta();
+            activateOta();
         }
+
+        server.handleClient();
     }
 }
