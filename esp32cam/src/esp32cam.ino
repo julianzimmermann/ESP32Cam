@@ -18,7 +18,7 @@ const char* WIFI_KEY = CONF_WIFI_KEY;
 
 unsigned long wifiLastConnectionAttemp = systemStartTime;
 unsigned long wifiReconnectionDelay = 10000;
-unsigned int wifiConnectionAttemps = 10;
+unsigned int wifiConnectionAttemps = 0;
 
 // OTA
 const char* OTA_HOST = CONF_OTA_HOST;
@@ -33,7 +33,7 @@ const char* AP_WIFI_KEY = CONF_AP_WIFI_KEY;
 
 unsigned long apActiveBeforeWifiReconnectInMinutes = 4;
 unsigned long apActivationTime = 0;
-int wifiReconnectsBeforApWillBeActivated = 1;
+int wifiReconnectsBeforApWillBeActivated = 10;
 bool softApEnabled = false;
 
 
