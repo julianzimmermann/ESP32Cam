@@ -7,3 +7,7 @@
 #define CONF_OTA true
 #define CONF_OTA_HOST "esp32cam"
 #define CONF_OTA_PASS "otapass"
+
+// AccessPoint
+#define CONF_AP_WIFI_SSID "ESP32_CAM"
+#define CONF_AP_WIFI_KEY "123ESP32123"
